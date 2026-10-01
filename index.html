@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#171717">
+<meta name="description" content="历史上的你——15道题，测测你最接近哪位历史人物。"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>历史上的你｜历史人格测试</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:#f6f1e7;color:#1d1a17;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+body{min-height:100vh}
+button,input{font:inherit}
+button{border:0;touch-action:manipulation;cursor:pointer;-webkit-user-select:none;user-select:none}
+.app{max-width:720px;margin:0 auto;min-height:100vh;background:#f6f1e7}
+.screen{display:none;min-height:100vh;padding:24px 20px 36px}
+.screen.active{display:block}
+.hero{padding:46px 8px 28px}
+.eyebrow{font-size:12px;letter-spacing:5px;color:#9a6a2f;font-weight:700}
+h1{font-size:42px;line-height:1.1;margin:14px 0 12px;font-weight:850;letter-spacing:-1px}
+h2{font-size:28px;margin:10px 0;font-weight:850}
+.sub{color:#756e65;line-height:1.75;font-size:15px}
+.card{background:#fff;border-radius:24px;padding:24px;box-shadow:0 10px 30px rgba(60,45,20,.07);margin-bottom:18px}
+.primary,.secondary{width:100%;padding:15px;border-radius:15px;font-weight:750;cursor:pointer}
+.primary{background:#1d1d1d;color:white}
+.secondary{background:#eee7dc;color:#26211c}
+.btnrow{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.feature{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+.feature div{background:#fff;padding:16px 10px;border-radius:17px;text-align:center;font-size:13px;line-height:1.5}
+.progress{height:8px;background:#e4ddd1;border-radius:20px;overflow:hidden;margin:8px 0 22px}
+.bar{height:100%;background:#242424;border-radius:20px;transition:.3s}
+.qmeta{color:#9a6a2f;font-size:13px;font-weight:700}
+.question{font-size:25px;font-weight:800;line-height:1.45;margin:14px 0 22px}
+.option{display:block;width:100%;text-align:left;-webkit-user-select:none;user-select:none;touch-action:manipulation;min-height:56px;background:#fff;border:1px solid #e7dfd3;padding:17px 16px;border-radius:16px;margin:10px 0;cursor:pointer}
+.option.selected{background:#26211c;color:#fff;border-color:#26211c}
+.resultHero{text-align:center;padding-top:30px}
+.resultName{font-size:46px;font-weight:900;margin:8px 0}
+.match{font-size:16px;color:#8b5d29;font-weight:800}
+.tag{display:inline-block;background:#eee7dc;padding:7px 10px;border-radius:999px;margin:4px;font-size:12px}
+.radarWrap{display:flex;justify-content:center;margin:10px 0}
+canvas{max-width:100%}
+.topitem{display:flex;align-items:center;padding:13px 0;border-bottom:1px solid #eee7dc}
+.topitem:last-child{border-bottom:0}
+.rank{width:32px;font-weight:900}
+.topname{flex:1;font-weight:750}
+.pct{color:#9a6a2f;font-weight:800}
+.small{font-size:12px;color:#999;line-height:1.6}
+.poster{width:100%;max-width:340px;border-radius:18px;display:block;margin:10px auto;background:#efe8dc}
+.historyRow{display:flex;justify-content:space-between;padding:15px 0;border-bottom:1px solid #eee7dc}
+.toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%);background:#222;color:#fff;padding:10px 15px;border-radius:999px;font-size:13px;opacity:0;pointer-events:none;transition:.2s;z-index:99}
+.toast.show{opacity:1}
+.back{background:none;color:#6e665d;padding:8px 0;cursor:pointer}
+.divider{text-align:center;color:#aaa;margin:18px 0}
+.code{font-size:46px;font-weight:900;letter-spacing:8px;text-align:center;margin:18px 0}
+.aiText{white-space:pre-wrap;line-height:1.9;color:#403a34}
+.footer{text-align:center;color:#aaa;font-size:12px;padding:24px 0}
+@media(min-width:600px){.screen{padding-left:40px;padding-right:40px}h1{font-size:52px}}
+</style>
+</head>
+<body>
+<div class="app">
+
+<section id="home" class="screen active">
+  <div class="hero">
+    <div class="eyebrow">HISTORY PERSONALITY</div>
+    <h1>历史上的你</h1>
+    <div class="sub">如果你生活在历史里，你会是哪一类人？<br>用 15 道题，看看你最接近哪位历史人物。</div>
+  </div>
+  <div class="card">
+    <button class="primary" onclick="startQuiz()">开始测试</button>
+    <div class="feature">
+      <div>65+<br>历史人物</div>
+      <div>8维<br>人格画像</div>
+      <div>Top 5<br>匹配结果</div>
+    </div>
+  </div>
+  <div class="card">
+    <b>怎么玩？</b>
+    <p class="sub">没有标准答案，凭第一反应选择。结果仅用于娱乐和自我观察，不代表心理诊断或历史人物真实人格。</p>
+  </div>
+  <div class="footer">History Personality · H5<br>手机、平板、电脑浏览器均可运行</div>
+</section>
+
+<section id="quiz" class="screen">
+  <button class="back" onclick="show('home')">← 返回</button>
+  <div class="qmeta" id="qmeta"></div>
+  <div class="progress"><div class="bar" id="bar"></div></div>
+  <div class="question" id="question"></div>
+  <div id="options"></div>
+</section>
+
+<section id="result" class="screen">
+  <div class="resultHero">
+    <div class="eyebrow">YOUR HISTORY PERSONA</div>
+    <div class="resultName" id="resultName"></div>
+    <div class="match" id="resultMatch"></div>
+    <div id="resultRole" style="margin:12px 0"></div>
+  </div>
+  <div class="card radarWrap"><canvas id="radar" width="330" height="300"></canvas></div>
+  <div class="card">
+    <h2>你的 Top 5</h2>
+    <div id="top5"></div>
+  </div>
+  <div class="card">
+    <h2>AI 风格解读</h2>
+    <div class="aiText" id="aiPreview"></div>
+  </div>
+  <div class="btnrow">
+    <button class="secondary" onclick="showCharacter()">人物详情</button>
+    <button class="secondary" onclick="makePoster()">生成海报</button>
+  </div>
+  <div class="btnrow">
+    <button class="primary" onclick="showAI()">深度解读</button>
+    <button class="secondary" onclick="showPK()">好友 PK</button>
+  </div>
+  <button class="secondary" style="margin-top:12px" onclick="startQuiz()">重新测试</button>
+</section>
+
+<section id="character" class="screen">
+  <button class="back" onclick="show('result')">← 返回结果</button>
+  <div class="hero">
+    <div class="eyebrow">HISTORICAL FIGURE</div>
+    <h1 id="charName"></h1>
+    <div class="sub" id="charSub"></div>
+  </div>
+  <div class="card" id="charBody"></div>
+</section>
+
+<section id="ai" class="screen">
+  <button class="back" onclick="show('result')">← 返回结果</button>
+  <div class="hero">
+    <div class="eyebrow">PERSONAL ANALYSIS</div>
+    <h1>AI 深度解读</h1>
+    <div class="sub">当前为纯前端智能模板版，不需要服务器或 API Key。</div>
+  </div>
+  <div class="card">
+    <button class="primary" onclick="generateAI()">生成我的分析</button>
+  </div>
+  <div class="card"><div class="aiText" id="aiText">点击上面的按钮开始。</div></div>
+</section>
+
+<section id="pk" class="screen">
+  <button class="back" onclick="show('result')">← 返回结果</button>
+  <div class="hero">
+    <div class="eyebrow">HISTORY PK</div>
+    <h1>和朋友比一比</h1>
+    <div class="sub">纯网页本地版。可以生成 PK 码体验流程；真正跨设备同步需要后端。</div>
+  </div>
+  <div class="card" id="pkHome">
+    <button class="primary" onclick="createPK()">生成我的 PK 码</button>
+    <div class="divider">或者</div>
+    <input id="pkInput" placeholder="输入好友 PK 码" style="width:100%;padding:15px;border:1px solid #ddd;border-radius:14px">
+    <button class="secondary" style="margin-top:12px" onclick="joinPK()">加入 PK</button>
+  </div>
+  <div class="card" id="pkRoom" style="display:none;text-align:center">
+    <div class="small">你的 PK 码</div>
+    <div class="code" id="pkCode"></div>
+    <button class="secondary" onclick="copyPK()">复制 PK 码</button>
+    <p class="small">把 PK 码发给朋友即可体验邀请流程。</p>
+  </div>
+  <div class="card" id="pkResult" style="display:none"></div>
+</section>
+
+<section id="poster" class="screen">
+  <button class="back" onclick="show('result')">← 返回结果</button>
+  <div class="hero"><div class="eyebrow">PERSONAL CARD</div><h1>你的历史人格</h1></div>
+  <div class="card"><canvas id="posterCanvas" width="900" height="1350" class="poster"></canvas>
+    <button class="primary" onclick="downloadPoster()">保存/下载海报</button>
+    <p class="small">手机浏览器可能会先打开图片，再长按保存。</p>
+  </div>
+</section>
+
+<section id="history" class="screen">
+  <button class="back" onclick="show('home')">← 返回</button>
+  <div class="hero"><div class="eyebrow">LOCAL HISTORY</div><h1>测试记录</h1></div>
+  <div class="card" id="historyList"></div>
+</section>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const CHARACTERS = [{"name":"孔子","subtitle":"教育与理想","tags":["理想主义","长期主义","克制","学习"],"profile":[35,55,90,55,70,90,65,95]},{"name":"秦始皇","subtitle":"制度与执行","tags":["领导力","执行力","改革","目标"],"profile":[75,98,65,98,35,90,40,60]},{"name":"刘邦","subtitle":"机会与用人","tags":["社交","领导力","判断","灵活"],"profile":[70,82,65,78,35,70,92,50]},{"name":"项羽","subtitle":"勇气与行动","tags":["冒险","执行力","竞争","直接"],"profile":[98,90,35,92,35,35,55,65]},{"name":"曹操","subtitle":"战略与决断","tags":["判断","领导力","执行力","权变"],"profile":[78,94,88,92,50,78,72,45]},{"name":"诸葛亮","subtitle":"规划与理性","tags":["理性","长期主义","责任","规划"],"profile":[40,78,98,88,60,98,55,82]},{"name":"司马懿","subtitle":"耐心与谋略","tags":["谨慎","长期主义","判断","耐心"],"profile":[25,70,94,72,35,99,50,45]},{"name":"李世民","subtitle":"学习与领导","tags":["领导力","学习","判断","包容"],"profile":[68,94,86,88,55,85,82,80]},{"name":"武则天","subtitle":"突破与权变","tags":["领导力","执行力","冒险","权变"],"profile":[88,97,72,94,45,80,70,55]},{"name":"王安石","subtitle":"改革与理想","tags":["理想主义","执行力","改革","长期主义"],"profile":[55,75,92,88,70,90,45,94]},{"name":"苏轼","subtitle":"豁达与创造","era":"北宋","role":"文学家","tags":["创造","自由","豁达"],"profile":[65,45,75,45,96,65,78,88]},{"name":"岳飞","subtitle":"责任与坚持","tags":["理想主义","执行力","责任","坚韧"],"profile":[55,82,75,94,30,85,45,96]},{"name":"朱元璋","subtitle":"韧性与目标","tags":["执行力","长期主义","竞争","韧性"],"profile":[72,90,60,97,30,88,40,55]},{"name":"郑和","subtitle":"探索与组织","tags":["冒险","执行力","探索","组织"],"profile":[88,72,65,90,45,60,80,55]},{"name":"张居正","subtitle":"制度与改革","tags":["执行力","理性","改革","长期主义"],"profile":[52,88,93,96,45,95,55,75]},{"name":"林则徐","subtitle":"责任与务实","tags":["责任","执行力","理性","克制"],"profile":[40,72,90,90,40,88,55,92]},{"name":"曾国藩","subtitle":"自律与积累","tags":["长期主义","理性","自律","反思"],"profile":[30,68,92,78,45,99,50,85]},{"name":"梁启超","subtitle":"思想与学习","tags":["学习","创造力","理想主义","表达"],"profile":[62,60,85,65,90,82,82,92]},{"name":"鲁迅","subtitle":"独立与批判","era":"近代","role":"文学家","tags":["批判","独立","创造"],"profile":[50,42,94,60,95,70,40,88]},{"name":"钱学森","subtitle":"科学与长期目标","era":"近代","role":"科学家","tags":["科学","坚持","责任"],"profile":[38,58,99,82,72,99,35,78]},{"name":"亚历山大","subtitle":"探索与征服","tags":["冒险","领导力","执行力","竞争"],"profile":[99,97,60,95,55,70,75,65]},{"name":"凯撒","subtitle":"决断与领导","tags":["领导力","判断","执行力","冒险"],"profile":[88,96,82,96,50,78,78,60]},{"name":"屋大维","subtitle":"稳定与战略","tags":["谨慎","长期主义","领导力","判断"],"profile":[35,90,92,82,40,99,68,55]},{"name":"达·芬奇","subtitle":"好奇与创造","era":"文艺复兴","role":"艺术家/发明家","tags":["创造","探索","学习"],"profile":[72,40,96,45,100,75,45,75]},{"name":"牛顿","subtitle":"理性与研究","era":"近代","role":"科学家","tags":["理性","长期","独立"],"profile":[25,42,100,65,90,99,25,65]},{"name":"达尔文","subtitle":"观察与耐心","era":"近代","role":"自然学家","tags":["理性","长期","探索"],"profile":[35,42,98,55,75,99,35,70]},{"name":"拿破仑","subtitle":"野心与执行","tags":["领导力","执行力","冒险","竞争"],"profile":[92,99,80,99,55,82,70,65]},{"name":"华盛顿","subtitle":"责任与克制","era":"近代","role":"政治家","tags":["责任","领导","克制"],"profile":[45,90,86,82,35,90,62,78]},{"name":"林肯","subtitle":"理想与韧性","era":"近代","role":"政治家","tags":["理想","责任","韧性"],"profile":[50,92,80,84,45,88,75,96]},{"name":"居里夫人","subtitle":"研究与坚持","tags":["理性","长期主义","学习","坚韧"],"profile":[30,45,99,78,75,100,30,80]},{"name":"商鞅","subtitle":"变法与制度","era":"秦代","role":"制度","tags":["改革","执行","理性"],"profile":[62,88,92,98,35,92,35,72]},{"name":"韩非","subtitle":"法治与权术","era":"战国","role":"思想家","tags":["理性","制度","分析"],"profile":[30,60,99,60,55,85,35,62]},{"name":"孙武","subtitle":"兵法与谋略","era":"春秋","role":"军事家","tags":["谋略","理性","战略"],"profile":[55,75,98,80,45,85,40,65]},{"name":"屈原","subtitle":"理想与文学","era":"战国","role":"文学家","tags":["理想","忠诚","创造"],"profile":[45,55,80,70,92,85,45,98]},{"name":"司马迁","subtitle":"记录与求知","era":"西汉","role":"史学家","tags":["求知","坚韧","记录"],"profile":[40,50,96,72,90,95,45,82]},{"name":"班固","subtitle":"史学与学术","era":"东汉","role":"史学家","tags":["学术","长期","创造"],"profile":[30,45,94,65,85,90,45,75]},{"name":"王羲之","subtitle":"书法与审美","era":"东晋","role":"书法家","tags":["创造","审美","专注"],"profile":[35,35,85,55,98,70,45,72]},{"name":"陶渊明","subtitle":"自由与归隐","era":"东晋","role":"文学家","tags":["自由","独立","淡泊"],"profile":[55,25,70,35,95,60,45,80]},{"name":"玄奘","subtitle":"求知与远行","era":"唐代","role":"高僧","tags":["探索","学习","坚持"],"profile":[78,45,90,70,55,92,45,90]},{"name":"韩愈","subtitle":"古文与思想","era":"唐代","role":"文学家","tags":["改革","表达","坚持"],"profile":[45,55,88,70,92,82,55,85]},{"name":"白居易","subtitle":"民生与文学","era":"唐代","role":"文学家","tags":["人文","表达","务实"],"profile":[40,55,82,65,95,75,70,88]},{"name":"范仲淹","subtitle":"责任与改革","era":"北宋","role":"政治家","tags":["责任","理想","改革"],"profile":[45,72,90,82,70,90,55,96]},{"name":"司马光","subtitle":"守成与史学","era":"北宋","role":"史学家","tags":["谨慎","理性","长期"],"profile":[25,55,96,65,75,98,55,65]},{"name":"陆游","subtitle":"爱国与文学","era":"南宋","role":"文学家","tags":["理想","坚持","创造"],"profile":[45,65,78,78,90,85,45,95]},{"name":"辛弃疾","subtitle":"豪情与报国","era":"南宋","role":"词人","tags":["理想","行动","竞争"],"profile":[75,82,70,88,88,80,55,96]},{"name":"王阳明","subtitle":"知行合一","era":"明代","role":"思想家","tags":["学习","行动","理想"],"profile":[55,65,94,90,80,88,55,92]},{"name":"徐霞客","subtitle":"探索与观察","era":"明代","role":"旅行家","tags":["探索","观察","独立"],"profile":[95,35,94,65,88,85,45,70]},{"name":"顾炎武","subtitle":"求实与经世","era":"明清","role":"思想家","tags":["求实","学习","责任"],"profile":[45,60,96,78,75,94,45,88]},{"name":"曹雪芹","subtitle":"文学与洞察","era":"清代","role":"文学家","tags":["创造","观察","独立"],"profile":[35,30,90,45,100,75,40,80]},{"name":"蒲松龄","subtitle":"想象与写作","era":"清代","role":"文学家","tags":["创造","观察","坚持"],"profile":[40,25,82,50,98,80,40,75]},{"name":"康有为","subtitle":"变法与思想","era":"清代","role":"思想家","tags":["改革","理想","表达"],"profile":[75,78,88,75,85,80,65,94]},{"name":"谭嗣同","subtitle":"理想与担当","era":"清代","role":"思想家","tags":["理想","行动","担当"],"profile":[90,82,70,90,80,65,55,98]},{"name":"章太炎","subtitle":"学术与批判","era":"近代","role":"学者","tags":["独立","学术","批判"],"profile":[55,50,98,65,90,88,45,82]},{"name":"蔡元培","subtitle":"教育与包容","era":"近代","role":"教育家","tags":["教育","包容","长期"],"profile":[35,65,94,65,75,92,80,88]},{"name":"胡适","subtitle":"思想与教育","era":"近代","role":"学者","tags":["理性","教育","表达"],"profile":[45,55,96,60,88,82,75,78]},{"name":"邓稼先","subtitle":"科学与奉献","era":"近代","role":"科学家","tags":["科学","责任","坚持"],"profile":[25,45,99,88,65,100,25,90]},{"name":"袁隆平","subtitle":"农业与民生","era":"现代","role":"科学家","tags":["实践","民生","长期"],"profile":[35,65,96,92,60,100,60,92]},{"name":"爱因斯坦","subtitle":"好奇与思考","era":"现代","role":"科学家","tags":["科学","创造","独立"],"profile":[45,40,100,55,95,90,45,70]},{"name":"莎士比亚","subtitle":"戏剧与人性","era":"近代","role":"文学家","tags":["创造","观察","表达"],"profile":[55,35,85,55,100,70,75,75]},{"name":"哥白尼","subtitle":"探索与求真","era":"近代","role":"天文学家","tags":["科学","独立","长期"],"profile":[45,35,99,60,90,92,30,72]},{"name":"伽利略","subtitle":"实验与求真","era":"近代","role":"科学家","tags":["科学","实验","批判"],"profile":[55,40,99,72,85,88,45,78]},{"name":"苏格拉底","subtitle":"追问与哲学","era":"古希腊","role":"哲学家","tags":["理性","追问","独立"],"profile":[35,35,99,45,80,90,65,85]},{"name":"柏拉图","subtitle":"理念与制度","era":"古希腊","role":"哲学家","tags":["理想","制度","理性"],"profile":[35,55,99,55,80,95,45,92]},{"name":"亚里士多德","subtitle":"观察与体系","era":"古希腊","role":"哲学家","tags":["理性","学习","系统"],"profile":[40,50,100,60,90,98,50,75]},{"name":"马可·奥勒留","subtitle":"克制与责任","era":"古罗马","role":"皇帝/哲学家","tags":["克制","责任","长期"],"profile":[25,75,95,75,65,98,45,85]}];
+const QUESTIONS = ["面对一个重要机会，你通常会怎么做？", "遇到突发问题时，你更倾向于？", "如果团队意见不一致，你会？", "你更喜欢怎样的工作节奏？", "面对陌生领域，你通常会？", "做长期规划时，你更看重？", "别人质疑你的决定时，你会？", "如果计划突然被打乱，你会？", "你更享受哪一种成就感？", "面对风险，你通常会？", "你在团队中更自然的角色是？", "学习新东西时，你更喜欢？", "遇到失败，你通常会？", "如果有机会改变现状，你会？", "你希望别人怎样评价你？"];
+const OPTIONS = [["立刻行动，边做边调整", "先分析信息，再决定", "找有经验的人商量", "先观察一段时间", "看机会是否值得冒险"], ["快速处理，解决眼前问题", "拆解原因，制定方案", "协调相关的人一起处理", "先稳定情绪和局面", "尝试一个新办法"], ["坚持自己的判断", "寻找共同点", "让更专业的人决定", "先听完所有意见", "提出一个折中方案"], ["高强度推进目标", "有计划地稳步推进", "自由安排时间", "不断尝试新事情", "和优秀的人一起推进"], ["先查资料", "直接上手", "找老师/高手请教", "从案例开始", "自己摸索"], ["明确目标", "长期积累", "保持选择空间", "抓住关键机会", "让计划可以不断调整"], ["用事实证明", "重新检查自己的判断", "听取合理意见", "坚持到底", "调整策略"], ["迅速重排计划", "保持原计划核心目标", "随机应变", "先看看变化意味着什么", "顺势尝试新的可能"], ["把复杂问题解决掉", "获得长期成果", "帮助团队完成目标", "发现一个新方向", "把想法变成现实"], ["控制风险后再行动", "愿意承担合理风险", "先评估最坏结果", "机会大就值得尝试", "跟着感觉走"], ["做决策的人", "负责推进的人", "提供建议的人", "连接大家的人", "提出新想法的人"], ["系统学习", "通过实践", "和别人讨论", "研究底层原理", "不断试错"], ["总结经验继续做", "找出失败原因", "换一种路径", "暂时休整后再来", "把失败当作新机会"], ["马上尝试", "充分准备后改变", "联合别人一起做", "寻找更好的方案", "先判断值不值得改变"], ["有判断力", "可靠踏实", "有创造力", "有格局", "有行动力"]];
+const DIMS = ["决策力", "行动力", "探索欲", "表达力", "协作力", "坚韧度", "创造力", "长期主义"];
+let qIndex=0, answers=[], current=null;
+
+const fallbackProfiles = {
+  "谋士":[90,65,80,78,82,88,75,95],
+  "统帅":[95,92,78,85,80,92,88,90],
+  "改革者":[88,86,82,80,90,90,85,92],
+  "探索者":[78,90,98,75,68,82,92,78],
+  "文人":[70,65,95,98,60,72,96,65],
+  "学者":[82,68,88,82,86,90,84,96],
+  "实干家":[80,96,72,70,90,94,76,88],
+  "理想主义者":[75,76,92,90,84,86,90,94]
+};
+
+function show(id){
+  document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function toast(t){
+  const e=document.getElementById('toast'); e.textContent=t; e.classList.add('show');
+  setTimeout(()=>e.classList.remove('show'),1800);
+}
+function startQuiz(){
+  qIndex=0; answers=[]; show('quiz'); renderQuestion();
+}
+function renderQuestion(){
+  const total=QUESTIONS.length;
+  document.getElementById('qmeta').textContent=`QUESTION ${qIndex+1} / ${total}`;
+  document.getElementById('bar').style.width=((qIndex)/total*100)+'%';
+  document.getElementById('question').textContent=QUESTIONS[qIndex];
+  const box=document.getElementById('options'); box.innerHTML='';
+  OPTIONS[qIndex].forEach((x,i)=>{
+    const b=document.createElement('button'); b.className='option';
+    b.textContent=String.fromCharCode(65+i)+'  '+x;
+    b.onclick=()=>choose(i,b); box.appendChild(b);
+  });
+}
+function choose(i,btn){
+  answers[qIndex]=i;
+  document.querySelectorAll('.option').forEach(x=>x.classList.remove('selected'));
+  btn.classList.add('selected');
+  setTimeout(()=>{
+    if(qIndex<QUESTIONS.length-1){qIndex++;renderQuestion();}
+    else finish();
+  },180);
+}
+function makeVector(){
+  const v=[50,50,50,50,50,50,50,50];
+  const weights=[
+    [[10,3,-2,1,1,3,2,5],[4,8,2,1,2,4,1,8],[1,2,2,5,6,2,1,4],[-2,1,6,3,2,1,8,2],[5,5,4,1,1,4,4,3]],
+    [[7,6,1,1,2,4,1,4],[2,6,3,1,3,2,2,6],[1,1,1,4,6,1,2,4],[3,4,4,1,2,4,3,3],[4,5,6,2,1,3,6,2]],
+    [[5,4,2,1,4,2,1,4],[2,3,2,2,5,2,2,5],[2,1,1,3,4,2,2,3],[4,3,5,2,2,2,5,3],[3,4,3,4,2,4,3,4]],
+    [[4,5,5,2,1,3,5,3],[3,4,2,4,3,4,4,5],[2,3,5,3,2,3,6,3],[4,5,4,1,1,2,5,4],[3,4,6,2,2,3,6,3]],
+    [[3,4,8,2,1,2,6,2],[4,3,2,2,4,3,3,6],[2,2,1,2,5,2,3,5],[4,3,5,3,2,3,6,4],[2,4,7,2,1,2,7,3]]
+  ];
+  answers.forEach((a,qi)=>{
+    const w=weights[qi%weights.length][a]||weights[0][a];
+    for(let j=0;j<8;j++)v[j]+=w[j];
+  });
+  return v.map(x=>Math.max(0,Math.min(100,Math.round(x))));
+}
+function similarity(a,b){
+  if(!b)return 0;
+  let s=0; for(let i=0;i<8;i++)s+=Math.pow((a[i]||0)-(b[i]||0),2);
+  const d=Math.sqrt(s);
+  return Math.max(1,Math.min(99,Math.round(100-d*0.55)));
+}
+function profile(c){
+  if(Array.isArray(c.profile))return c.profile;
+  return fallbackProfiles[c.role]||[70,70,70,70,70,70,70,70];
+}
+function roleMatch(v){
+  let best=null;
+  Object.entries(fallbackProfiles).forEach(([name,p])=>{
+    const sim=similarity(v,p);
+    if(!best||sim>best.sim)best={name,sim};
+  });
+  return best;
+}
+function finish(){
+  const vector=makeVector();
+  const scored=CHARACTERS.map(c=>({...c,match:similarity(vector,profile(c))}))
+    .sort((a,b)=>b.match-a.match).slice(0,5);
+  const role=roleMatch(vector);
+  current={vector,top:scored,role};
+  localStorage.setItem('history_personality_last',JSON.stringify(current));
+  const history=JSON.parse(localStorage.getItem('history_personality_history')||'[]');
+  history.unshift({...current,time:Date.now()});
+  localStorage.setItem('history_personality_history',JSON.stringify(history.slice(0,30)));
+  document.getElementById('resultName').textContent=scored[0]?.name||'历史探索者';
+  document.getElementById('resultMatch').textContent='匹配度 '+(scored[0]?.match||0)+'%';
+  document.getElementById('resultRole').innerHTML='<span class="tag">历史角色：'+role.name+'</span>';
+  document.getElementById('top5').innerHTML=scored.map((x,i)=>`<div class="topitem"><span class="rank">${i+1}</span><span class="topname">${x.name}</span><span class="pct">${x.match}%</span></div>`).join('');
+  document.getElementById('aiPreview').textContent=makeAI(current);
+  show('result'); drawRadar(vector);
+}
+function drawRadar(v){
+  const c=document.getElementById('radar'),ctx=c.getContext('2d');
+  ctx.clearRect(0,0,c.width,c.height);
+  const cx=165,cy=150,r=105,n=8;
+  ctx.lineWidth=1;
+  for(let ring=1;ring<=4;ring++){
+    ctx.beginPath();
+    for(let i=0;i<n;i++){
+      const a=-Math.PI/2+i*2*Math.PI/n, rr=r*ring/4;
+      const x=cx+Math.cos(a)*rr,y=cy+Math.sin(a)*rr;
+      i?ctx.lineTo(x,y):ctx.moveTo(x,y);
+    }
+    ctx.closePath();ctx.stroke();
+  }
+  for(let i=0;i<n;i++){
+    const a=-Math.PI/2+i*2*Math.PI/n;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+Math.cos(a)*r,cy+Math.sin(a)*r);ctx.stroke();
+  }
+  ctx.beginPath();
+  v.forEach((val,i)=>{
+    const a=-Math.PI/2+i*2*Math.PI/n,rr=r*val/100;
+    const x=cx+Math.cos(a)*rr,y=cy+Math.sin(a)*rr;
+    i?ctx.lineTo(x,y):ctx.moveTo(x,y);
+  });
+  ctx.closePath();ctx.stroke();ctx.fill();
+  ctx.font='12px sans-serif';ctx.textAlign='center';
+  DIMS.forEach((d,i)=>{
+    const a=-Math.PI/2+i*2*Math.PI/n;
+    ctx.fillText(d,cx+Math.cos(a)*(r+27),cy+Math.sin(a)*(r+27));
+  });
+}
+function showCharacter(){
+  if(!current?.top?.[0])return;
+  const c=current.top[0];
+  document.getElementById('charName').textContent=c.name;
+  document.getElementById('charSub').textContent=(c.era||'历史人物')+' · '+(c.subtitle||c.role||'');
+  const tags=(c.tags||[]).map(x=>'<span class="tag">'+x+'</span>').join('');
+  const bio={"孔子": "孔子是春秋时期思想家、教育家，长期从事教育与思想传播，对中国传统文化影响深远。", "秦始皇": "秦始皇统一六国后建立秦朝，并推动郡县制等制度建设。其历史影响主要体现在国家统一与制度整合。", "刘邦": "刘邦建立汉朝，在楚汉战争中形成了重要的政治和军事联盟，其用人和整合资源的历史故事广为流传。", "项羽": "项羽是秦末重要军事人物，以巨鹿之战等经历闻名。其人生也常被后世用于讨论勇气、决断与战略选择。", "曹操": "曹操是东汉末年政治家、军事家、文学家，在统一北方、组织治理和文学创作方面留下重要历史记录。", "诸葛亮": "诸葛亮是三国时期蜀汉政治家、军事家，参与蜀汉政权治理，后世文学作品进一步塑造了其智慧与谋略形象。", "司马懿": "司马懿是三国时期魏国重要政治军事人物，长期参与魏国政局，其经历常被用于讨论耐心、谋略与时机。", "李世民": "唐太宗李世民参与建立唐朝并在即位后推动治理，其统治时期形成了中国历史上著名的政治文化现象。", "武则天": "武则天是中国历史上唯一得到普遍承认的女皇帝，在政治制度和用人方面留下重要历史记录。", "王安石": "王安石是北宋政治家、文学家，主持熙宁变法，围绕财政、军事和社会治理进行了一系列改革尝试。", "苏轼": "苏轼是北宋文学家、书画家和政治人物，在诗词散文、书画及人生经历方面都具有重要文化影响。", "岳飞": "岳飞是南宋抗金将领，相关历史叙事长期强调忠诚、责任与军事行动，其形象在后世文化中影响深远。", "朱元璋": "朱元璋出身农民，后来建立明朝。其人生经历包含从底层起步、战争竞争到建立政权的巨大转变。", "郑和": "郑和是明代航海家，曾率大型船队多次远航，相关航海活动在中外交流史上具有重要地位。", "张居正": "张居正是明代政治家，主持万历初年的改革，在财政、考成等方面推行治理措施。", "林则徐": "林则徐是清代政治家，曾主持禁烟等事务，也重视西方信息的搜集与研究。", "曾国藩": "曾国藩是清代政治、军事人物，也留下大量家书与文章。其自我反省、治学与修身内容在后世广受讨论。", "梁启超": "梁启超是近代思想家、政治人物、学者和作家，在近代中国思想传播和教育文化领域具有重要影响。", "鲁迅": "鲁迅是中国现代文学的重要作家，其小说、散文和杂文对现代中国文学与思想文化产生深远影响。", "钱学森": "钱学森是中国著名科学家和工程教育家，在中国航天事业早期发展中发挥了重要作用。", "亚历山大": "亚历山大大帝是马其顿国王，通过一系列军事行动建立了横跨欧亚非的庞大帝国，其时代推动了不同地区之间的交流。", "凯撒": "尤利乌斯·凯撒是古罗马政治家、军事家，在罗马共和国晚期政治与军事史上具有重要地位。", "屋大维": "屋大维是罗马帝国第一位皇帝奥古斯都，长期政治经营与制度安排塑造了罗马帝国早期秩序。", "达·芬奇": "列奥纳多·达·芬奇是文艺复兴时期艺术家、工程师和研究者，以绘画以及对科学、工程和自然的广泛探索著称。", "牛顿": "艾萨克·牛顿是英国物理学家、数学家，经典力学和万有引力等工作对现代科学发展产生巨大影响。", "达尔文": "查尔斯·达尔文是英国自然学家，通过长期观察和研究提出了以自然选择为核心的进化论解释。", "拿破仑": "拿破仑·波拿巴是法国军事与政治人物，在法国大革命后的欧洲政治军事史上具有重要影响。", "华盛顿": "乔治·华盛顿是美国独立战争时期的重要军事与政治人物，后来成为美国首任总统。", "林肯": "亚伯拉罕·林肯是美国第16任总统，在美国内战时期领导联邦政府，其任期与废奴和国家统一等重大历史议题密切相关。", "居里夫人": "玛丽·居里是著名科学家，在放射性研究方面作出重要贡献，并两度获得诺贝尔奖。", "商鞅": "商鞅是战国时期政治家，主持秦国变法，在法律、行政和土地制度等方面推行改革。", "韩非": "韩非是战国时期思想家，法家思想的重要代表人物，其著作讨论了法、术、势等政治治理问题。", "孙武": "孙武是春秋时期军事思想家，传统上被认为是《孙子兵法》的作者。", "屈原": "屈原是战国时期楚国诗人和政治人物，《离骚》等作品对中国文学传统影响深远。", "司马迁": "司马迁是西汉史学家、文学家，《史记》对中国史学和文学传统影响深远。", "班固": "班固是东汉史学家、文学家，《汉书》是中国纪传体断代史的重要作品。", "王羲之": "王羲之是东晋书法家，被后世尊为“书圣”，《兰亭序》等作品影响深远。", "陶渊明": "陶渊明是东晋文学家，以诗文和田园文学著称，其作品常表现对自然、独立生活与精神自由的追求。", "玄奘": "玄奘是唐代高僧、翻译家和旅行者，曾赴天竺求法，并主持大量佛经翻译工作。", "韩愈": "韩愈是唐代文学家、思想家，倡导古文运动，在文学与思想史上影响深远。", "白居易": "白居易是唐代文学家，诗歌重视社会现实与民生表达，对后世文学影响深远。", "范仲淹": "范仲淹是北宋政治家、文学家，参与庆历新政，其作品和政治实践长期受到后世关注。", "司马光": "司马光是北宋史学家、政治家，主持编纂《资治通鉴》，在史学史上具有重要地位。", "陆游": "陆游是南宋文学家，以诗词著称，作品中常见家国、个人理想与人生经历等主题。", "辛弃疾": "辛弃疾是南宋词人和政治人物，作品常表现家国情怀与个人抱负。", "王阳明": "王阳明是明代思想家、军事家、教育家，提出“致良知”等思想，强调知行合一。", "徐霞客": "徐霞客是明代旅行家、地理学家，长期实地考察并记录山川地貌。", "顾炎武": "顾炎武是明清之际思想家、学者，重视经世致用和实证考察。", "曹雪芹": "曹雪芹是清代文学家，《红楼梦》对中国小说史和文化史产生深远影响。", "蒲松龄": "蒲松龄是清代文学家，《聊斋志异》以丰富的志怪故事和社会观察著称。", "康有为": "康有为是晚清思想家、政治人物，参与维新变法，推动制度改革讨论。", "谭嗣同": "谭嗣同是晚清维新派人物，参与戊戌变法，其思想与人生经历具有鲜明的时代特征。", "章太炎": "章太炎是近代思想家、学者，在经学、语言文字和政治思想方面有较大影响。", "蔡元培": "蔡元培是近代教育家，曾任北京大学校长，重视学术自由和兼容并包的教育理念。", "胡适": "胡适是近代学者、思想家、教育家，在文学、教育和思想文化领域留下大量作品。", "邓稼先": "邓稼先是中国著名核物理学家，在中国核武器研制工作中发挥了重要作用。", "袁隆平": "袁隆平是中国著名农业科学家，长期从事杂交水稻研究，对粮食生产和农业科技发展作出重要贡献。", "爱因斯坦": "阿尔伯特·爱因斯坦是理论物理学家，相对论等研究改变了现代物理学的发展。", "莎士比亚": "威廉·莎士比亚是英国剧作家和诗人，其戏剧作品对世界文学产生广泛影响。", "哥白尼": "尼古拉·哥白尼提出日心说，对近代天文学的发展产生重要影响。", "伽利略": "伽利略是意大利科学家，在天文学、物理学和实验方法发展方面具有重要地位。", "苏格拉底": "苏格拉底是古希腊哲学家，以持续追问和对伦理问题的讨论著称。", "柏拉图": "柏拉图是古希腊哲学家，创办学院，其思想对西方哲学传统影响深远。", "亚里士多德": "亚里士多德是古希腊哲学家和学者，在逻辑学、自然哲学、伦理学等领域留下大量著作。", "马可·奥勒留": "马可·奥勒留是罗马皇帝和斯多葛派哲学家，其《沉思录》记录了大量关于责任、自律和人生的思考。"};
+  const text=bio[c.name]||'这是一次娱乐性历史人物匹配。这里展示的是模型根据测试维度生成的角色画像，不等同于历史研究结论。';
+  document.getElementById('charBody').innerHTML=tags+'<p class="sub" style="margin-top:18px">'+text+'</p><p class="small">你的匹配度：'+c.match+'%</p>';
+  show('character');
+}
+function makeAI(r){
+  const names=r.top.slice(0,3).map(x=>x.name).join('、');
+  return `你的结果更接近「${r.role.name}」。\n\n匹配度靠前的人物：${names}。\n\n你的八维画像并不是简单地对应某一个人，而是多个特征组合后的结果。你可以重点观察自己的决策、行动、探索、表达、协作与长期规划倾向。\n\n这份报告用于娱乐和自我观察，不是心理诊断，也不代表这些历史人物真实、完整的心理特征。`;
+}
+function showAI(){
+  document.getElementById('aiText').textContent='点击“生成我的分析”开始。';
+  show('ai');
+}
+function generateAI(){
+  document.getElementById('aiText').textContent=makeAI(current);
+}
+function showPK(){show('pk')}
+function createPK(){
+  if(!current)return;
+  const code=Math.random().toString(36).slice(2,8).toUpperCase();
+  localStorage.setItem('pk_'+code,JSON.stringify(current));
+  document.getElementById('pkCode').textContent=code;
+  document.getElementById('pkHome').style.display='none';
+  document.getElementById('pkRoom').style.display='block';
+}
+function copyPK(){
+  const code=document.getElementById('pkCode').textContent;
+  if(navigator.clipboard)navigator.clipboard.writeText(code).then(()=>toast('PK码已复制'));
+  else toast('请长按复制 PK 码');
+}
+function joinPK(){
+  const code=(document.getElementById('pkInput').value||'').trim().toUpperCase();
+  const raw=localStorage.getItem('pk_'+code);
+  if(!raw){toast('没有找到这个本地 PK 房间');return;}
+  const other=JSON.parse(raw);
+  let d=0;for(let i=0;i<8;i++)d+=Math.pow((current.vector[i]||0)-(other.vector[i]||0),2);
+  d=Math.sqrt(d).toFixed(2);
+  const same=Number(d)<35;
+  document.getElementById('pkResult').style.display='block';
+  document.getElementById('pkResult').innerHTML='<h2>PK结果</h2><p>'+ (same?'你们的人格画像比较接近。':'你们的人格画像存在明显差异。')+'</p><p class="sub">人格向量距离：'+d+'</p>';
+}
+function makePoster(){
+  if(!current)return;
+  const c=document.getElementById('posterCanvas'),ctx=c.getContext('2d');
+  ctx.fillStyle='#efe8dc';ctx.fillRect(0,0,c.width,c.height);
+  ctx.fillStyle='#24201c';ctx.textAlign='center';
+  ctx.font='700 42px sans-serif';ctx.fillText('HISTORY PERSONALITY',450,130);
+  ctx.font='900 100px sans-serif';ctx.fillText(current.top[0].name,450,330);
+  ctx.font='700 38px sans-serif';ctx.fillText('历史人格 · '+current.role.name,450,420);
+  ctx.font='700 48px sans-serif';ctx.fillText('匹配度 '+current.top[0].match+'%',450,520);
+  ctx.font='28px sans-serif';ctx.fillText('八维人格测试结果',450,610);
+  const v=current.vector,cx=450,cy=860,r=220,n=8;
+  ctx.lineWidth=3;
+  for(let ring=1;ring<=4;ring++){
+    ctx.beginPath();
+    for(let i=0;i<n;i++){const a=-Math.PI/2+i*2*Math.PI/n,rr=r*ring/4,x=cx+Math.cos(a)*rr,y=cy+Math.sin(a)*rr;i?ctx.lineTo(x,y):ctx.moveTo(x,y)}
+    ctx.closePath();ctx.stroke();
+  }
+  ctx.beginPath();
+  v.forEach((val,i)=>{const a=-Math.PI/2+i*2*Math.PI/n,rr=r*val/100,x=cx+Math.cos(a)*rr,y=cy+Math.sin(a)*rr;i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.closePath();ctx.stroke();
+  ctx.font='26px sans-serif';DIMS.forEach((d,i)=>{const a=-Math.PI/2+i*2*Math.PI/n;ctx.fillText(d,cx+Math.cos(a)*(r+45),cy+Math.sin(a)*(r+45))});
+  ctx.font='24px sans-serif';ctx.fillText('娱乐性人格模型 · 非心理诊断',450,1260);
+  show('poster');
+}
+function downloadPoster(){
+  const c=document.getElementById('posterCanvas');
+  c.toBlob(blob=>{
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=url;a.download='我的历史人格.png';a.click();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+  });
+}
+function showHistory(){
+  const arr=JSON.parse(localStorage.getItem('history_personality_history')||'[]');
+  document.getElementById('historyList').innerHTML=arr.length?arr.map((x,i)=>`<div class="historyRow"><span>${i+1}. ${x.top?.[0]?.name||'未知'}</span><span>${x.top?.[0]?.match||0}%</span></div>`).join(''):'<p class="small">还没有测试记录。</p>';
+  show('history');
+}
+</script>
+</body>
+</html>
