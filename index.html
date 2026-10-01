@@ -394,9 +394,6 @@ function showHistory(){
   document.getElementById('historyList').innerHTML=arr.length?arr.map((x,i)=>`<div class="historyRow"><span>${i+1}. ${x.top?.[0]?.name||'未知'}</span><span>${x.top?.[0]?.match||0}%</span></div>`).join(''):'<p class="small">还没有测试记录。</p>';
   show('history');
 }
-</script>
-</body>
-</html>
 /* CLOUD_STATS_V1 */
 const STATS_ENDPOINT = 'PASTE_APPS_SCRIPT_WEB_APP_URL_HERE';
 function submitStats(result) {
@@ -413,3 +410,6 @@ function submitStats(result) {
     }).catch(()=>{});
   } catch(e) {}
 }
+</script>
+</body>
+</html>
