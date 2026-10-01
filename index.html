@@ -278,7 +278,7 @@ function finish(){
   document.getElementById('resultRole').innerHTML='<span class="tag">历史角色：'+role.name+'</span>';
   document.getElementById('top5').innerHTML=scored.map((x,i)=>`<div class="topitem"><span class="rank">${i+1}</span><span class="topname">${x.name}</span><span class="pct">${x.match}%</span></div>`).join('');
   document.getElementById('aiPreview').textContent=makeAI(current);
-  submitStats(current);\n  show('result'); drawRadar(vector);
+  show('result'); drawRadar(vector);
 }
 function drawRadar(v){
   const c=document.getElementById('radar'),ctx=c.getContext('2d');
@@ -393,22 +393,6 @@ function showHistory(){
   const arr=JSON.parse(localStorage.getItem('history_personality_history')||'[]');
   document.getElementById('historyList').innerHTML=arr.length?arr.map((x,i)=>`<div class="historyRow"><span>${i+1}. ${x.top?.[0]?.name||'未知'}</span><span>${x.top?.[0]?.match||0}%</span></div>`).join(''):'<p class="small">还没有测试记录。</p>';
   show('history');
-}
-/* CLOUD_STATS_V1 */
-const STATS_ENDPOINT = 'PASTE_APPS_SCRIPT_WEB_APP_URL_HERE';
-function submitStats(result) {
-  if (!result || !result.top || !result.top[0]) return;
-  if (!STATS_ENDPOINT || STATS_ENDPOINT.indexOf('PASTE_') === 0) return;
-  try {
-    const attemptId = (crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now()) + Math.random();
-    fetch(STATS_ENDPOINT, {
-      method:'POST',
-      mode:'no-cors',
-      headers:{'Content-Type':'text/plain;charset=UTF-8'},
-      body:JSON.stringify({attemptId:attemptId,result:result}),
-      keepalive:true
-    }).catch(()=>{});
-  } catch(e) {}
 }
 </script>
 </body>
