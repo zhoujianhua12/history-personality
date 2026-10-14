@@ -53,7 +53,7 @@ canvas{max-width:100%}
 .divider{text-align:center;color:#aaa;margin:18px 0}
 .code{font-size:46px;font-weight:900;letter-spacing:8px;text-align:center;margin:18px 0}
 .aiText{white-space:pre-wrap;line-height:1.9;color:#403a34}
-.footer{text-align:center;color:#aaa;font-size:12px;padding:24px 0}
+.figureHero{display:grid;grid-template-columns:86px 1fr;gap:16px;align-items:center}.figureAvatar{width:86px;height:86px;border-radius:24px;background:#eee7dc;display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:900;color:#6f5131}.quote{border-left:4px solid #9a6a2f;padding:12px 16px;background:#faf6ef;border-radius:0 14px 14px 0;line-height:1.8}.timelineItem{position:relative;padding:0 0 18px 22px;border-left:2px solid #e5ddcf;margin-left:7px}.timelineItem:before{content:"";position:absolute;left:-6px;top:3px;width:10px;height:10px;border-radius:50%;background:#9a6a2f}.timelineItem:last-child{padding-bottom:0}.footer{text-align:center;color:#aaa;font-size:12px;padding:24px 0}@media(max-width:420px){.figureHero{grid-template-columns:70px 1fr}.figureAvatar{width:70px;height:70px;font-size:30px}}
 @media(min-width:600px){.screen{padding-left:40px;padding-right:40px}h1{font-size:52px}}
 </style>
 </head>
@@ -353,6 +353,16 @@ function drawRadar(v){
     ctx.fillText(d,cx+Math.cos(a)*(r+27),cy+Math.sin(a)*(r+27));
   });
 }
+const figureQuotes={"孔子":"学而时习之，不亦说乎。","诸葛亮":"非淡泊无以明志，非宁静无以致远。","苏轼":"人生如逆旅，我亦是行人。","王阳明":"知是行之始，行是知之成。","李世民":"以人为镜，可以明得失。","曹操":"老骥伏枥，志在千里。","鲁迅":"其实地上本没有路，走的人多了，也便成了路。","牛顿":"如果说我看得更远，那是因为我站在巨人的肩膀上。","达·芬奇":"学习永远不会使心智疲倦。","爱因斯坦":"想象力比知识更重要。"};
+const figureEvents={"孔子":["周游列国，传播思想与教育理念","整理、传授经典，对后世教育传统影响深远"],"秦始皇":["统一六国，建立秦朝","推进制度、文字、度量衡等统一"],"刘邦":["楚汉战争中逐步取得优势","建立汉朝，开启长期汉代政治秩序"],"曹操":["参与东汉末年政治军事竞争","逐步统一北方部分地区"],"诸葛亮":["辅佐刘备建立蜀汉","主持蜀汉政务并组织北伐"],"李世民":["参与唐朝建立","即位后推动治理，形成贞观时期政治局面"],"武则天":["进入唐代政治核心","建立武周政权并长期掌握最高权力"],"王安石":["主持熙宁变法","围绕财政、军事、社会治理推行改革"],"苏轼":["经历北宋政治起伏","留下大量诗词散文与书画作品"],"王阳明":["经历龙场时期并形成重要思想","在军事与教育实践中发展知行合一思想"],"司马迁":["承担史官工作并经历重大人生挫折","完成《史记》"],"鲁迅":["弃医从文，参与新文化时期文化活动","以小说、散文、杂文影响现代中国文学"],"钱学森":["在海外从事航空航天研究","回国后参与中国航天科技事业建设"],"牛顿":["长期研究数学与自然哲学","发表《自然哲学的数学原理》"],"达·芬奇":["持续探索艺术、工程与自然","创作重要艺术作品并留下研究手稿"]};
+function renderCharacterExtras(c){
+ const q=figureQuotes[c.name]||'历史人物的价值，不只是一个标签，而是其在具体时代中的选择与行动。';
+ const es=figureEvents[c.name]||['在所处时代形成个人的主要经历与选择','在自己的领域留下作品、制度或思想影响'];
+ let box=document.getElementById('charExtra'); if(box)box.remove();
+ box=document.createElement('div');box.id='charExtra';box.className='card';
+ box.innerHTML='<h2>一句话认识他</h2><div class="quote">“'+q+'”</div><h2 style="margin-top:24px">人生时间线</h2>'+es.map((e,i)=>'<div class="timelineItem"><b>关键阶段 '+(i+1)+'</b><div class="sub" style="margin-top:5px">'+e+'</div></div>').join('')+'<p class="small" style="margin-top:18px">注：名言与历史概述用于产品展示，部分名言在不同文献版本中存在不同表述。</p>';
+ document.getElementById('character').appendChild(box);
+}
 function showCharacter(){
   if(!current?.top?.[0])return;
   const c=current.top[0];
@@ -364,6 +374,7 @@ function showCharacter(){
   document.getElementById('charBody').innerHTML=tags+'<p class="sub" style="margin-top:18px">'+text+'</p><p class="small">你的匹配度：'+c.match+'%</p><div class="btnrow"><button class="secondary" onclick="renderWhyLike()">为什么像他？</button><button class="secondary" onclick="renderEraLife()">如果活在那个时代</button></div>';
   renderCharacterArchive(c);
   show('character');
+  renderCharacterExtras(c);
 }
 function buildWhyLike(c){
   const v=current?.vector||profile(c);
