@@ -55,6 +55,115 @@ canvas{max-width:100%}
 .aiText{white-space:pre-wrap;line-height:1.9;color:#403a34}
 .figureHero{display:grid;grid-template-columns:86px 1fr;gap:16px;align-items:center}.figureAvatar{width:86px;height:86px;border-radius:24px;background:#eee7dc;display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:900;color:#6f5131}.quote{border-left:4px solid #9a6a2f;padding:12px 16px;background:#faf6ef;border-radius:0 14px 14px 0;line-height:1.8}.timelineItem{position:relative;padding:0 0 18px 22px;border-left:2px solid #e5ddcf;margin-left:7px}.timelineItem:before{content:"";position:absolute;left:-6px;top:3px;width:10px;height:10px;border-radius:50%;background:#9a6a2f}.timelineItem:last-child{padding-bottom:0}.footer{text-align:center;color:#aaa;font-size:12px;padding:24px 0}@media(max-width:420px){.figureHero{grid-template-columns:70px 1fr}.figureAvatar{width:70px;height:70px;font-size:30px}}
 @media(min-width:600px){.screen{padding-left:40px;padding-right:40px}h1{font-size:52px}}
+
+/* V3 UI refresh — visual only, no business logic changes */
+:root{
+  --ink:#1f1b16;--muted:#766f66;--paper:#fffdf9;--cream:#f6f0e6;
+  --line:#e9dfd1;--accent:#9b6a32;--accent2:#c69a62;
+}
+html,body{background:
+ radial-gradient(circle at 10% 0%,rgba(197,157,104,.13),transparent 28%),
+ radial-gradient(circle at 100% 15%,rgba(120,92,58,.08),transparent 25%),
+ #f6f0e6;color:var(--ink)}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+.app{background:transparent}
+.screen{padding:18px 18px 44px}
+.hero{padding:30px 4px 22px}
+.eyebrow{font-size:11px;letter-spacing:3.5px;color:var(--accent);font-weight:800}
+h1{font-size:40px;line-height:1.08;margin:11px 0 10px;letter-spacing:-1.5px}
+h2{font-size:23px;line-height:1.25;margin:7px 0 12px}
+.sub{color:var(--muted);line-height:1.75;font-size:14px}
+.card{
+ background:rgba(255,253,249,.92);border:1px solid rgba(233,223,209,.9);
+ border-radius:22px;padding:20px;margin-bottom:14px;
+ box-shadow:0 14px 36px rgba(67,48,26,.07);
+ backdrop-filter:blur(10px)
+}
+#home .hero{
+ padding:48px 6px 30px;position:relative;overflow:hidden
+}
+#home .hero:after{
+ content:"史";position:absolute;right:-5px;top:12px;font-family:serif;
+ font-size:150px;line-height:1;color:rgba(155,106,50,.075);pointer-events:none
+}
+#home .hero h1{font-size:48px}
+#home .hero .sub{font-size:15px;max-width:430px}
+#home .card:first-of-type{
+ background:linear-gradient(145deg,#29241f,#171512);color:#fff;
+ border:0;box-shadow:0 18px 42px rgba(35,27,19,.2)
+}
+#home .card:first-of-type .feature div{
+ background:rgba(255,255,255,.09);color:#f8f3ea;border:1px solid rgba(255,255,255,.1)
+}
+#home .card:first-of-type .primary{background:#fff;color:#201c18}
+.primary,.secondary{
+ min-height:50px;padding:14px 16px;border-radius:15px;font-size:15px;
+ transition:transform .16s ease,box-shadow .16s ease,background .16s ease
+}
+.primary{background:#211d19;color:#fff;box-shadow:0 8px 18px rgba(33,29,25,.13)}
+.secondary{background:#f1eadf;color:#2a241e;border:1px solid #e6dbcb}
+.primary:active,.secondary:active,.option:active{transform:scale(.985)}
+.feature{gap:9px;margin-top:14px}
+.feature div{background:#faf6ef;padding:13px 8px;border:1px solid #eee4d7;border-radius:15px}
+.progress{height:7px;background:#e8dfd2;margin:7px 0 20px}
+.bar{background:linear-gradient(90deg,#8f5f2b,#c79a61)}
+.question{font-size:23px;line-height:1.5;margin:12px 0 20px}
+.option{
+ background:rgba(255,253,249,.96);border:1px solid #e5dbcc;
+ min-height:58px;padding:16px 15px;border-radius:15px;margin:9px 0;
+ box-shadow:0 4px 12px rgba(60,45,25,.035);font-size:15px
+}
+.option.selected{background:#28231e;color:#fff;border-color:#28231e;box-shadow:0 8px 18px rgba(40,35,30,.16)}
+.resultHero{padding-top:22px}
+.resultName{font-size:44px;letter-spacing:-1px}
+.match{display:inline-block;background:#f0e1cd;color:#8b5d29;padding:7px 11px;border-radius:999px}
+.tag{background:#f1e9dd;color:#715333;border:1px solid #eadfce;padding:6px 9px}
+.topitem{padding:14px 4px;border-bottom:1px solid #eee5da}
+.rank{width:30px;color:#9b6a32}
+.pct{color:#9b6a32}
+.back{font-size:14px;font-weight:700;padding:9px 2px;color:#756c62}
+input{
+ outline:none;background:#fffdf9;color:#29231e;
+ border:1px solid #e4dacb!important;box-shadow:inset 0 1px 2px rgba(60,45,25,.025)
+}
+input:focus{border-color:#b58a58!important;box-shadow:0 0 0 4px rgba(181,138,88,.12)}
+#galleryList{
+ display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px
+}
+#galleryList .figureCard{
+ background:#fbf7f0;border:1px solid #ece1d2;border-radius:17px;
+ padding:15px;min-height:142px;border-bottom:1px solid #ece1d2;
+ box-shadow:0 5px 16px rgba(60,45,25,.045);transition:transform .16s ease
+}
+#galleryList .figureCard:active{transform:scale(.985)}
+.figureTitle{font-size:18px;letter-spacing:.2px}
+.figureMeta{color:#9b6a32;font-weight:700}
+#galleryFilters{display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none}
+#galleryFilters::-webkit-scrollbar{display:none}
+#galleryFilters .tag{white-space:nowrap;cursor:pointer}
+.timelineEra{padding:15px 2px;border-bottom:1px solid #eee5da}
+.timelineNames{line-height:2.15}
+.timelineNames span{display:inline-block;background:#f7f0e6;border-radius:999px;padding:0 9px;margin:3px 2px;color:#635a50}
+.figureHero{background:linear-gradient(145deg,#f7efe3,#fffdf9);border-radius:20px;padding:16px}
+.figureAvatar{background:#e9dcc9;color:#79562f;box-shadow:inset 0 0 0 1px #dfd0bc}
+.quote{border-left-color:#a87338;background:#fbf5ec}
+.timelineItem{border-left-color:#dfd3c2}
+.timelineItem:before{background:#a87338}
+.toast{bottom:24px;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.footer{padding:22px 0;color:#a69d92}
+@media(max-width:520px){
+ #galleryList{grid-template-columns:1fr 1fr}
+}
+@media(max-width:370px){
+ #galleryList{grid-template-columns:1fr}
+ #home .hero h1{font-size:42px}
+ .btnrow{grid-template-columns:1fr}
+}
+@media(min-width:600px){
+ .screen{padding-left:32px;padding-right:32px}
+ .hero{padding-top:36px}
+ #galleryList{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
 </style>
 </head>
 <body>
