@@ -39,7 +39,7 @@ h2{font-size:28px;margin:10px 0;font-weight:850}
 .tag{display:inline-block;background:#eee7dc;padding:7px 10px;border-radius:999px;margin:4px;font-size:12px}
 .radarWrap{display:flex;justify-content:center;margin:10px 0}
 canvas{max-width:100%}
-.topitem{display:flex;align-items:center;padding:13px 0;border-bottom:1px solid #eee7dc}
+.topitem{display:flex;align-items:center;padding:13px 0;border-bottom:1px solid #eee7dc}.figureCard{padding:16px 0;border-bottom:1px solid #eee7dc;cursor:pointer}.figureCard:last-child{border-bottom:0}.figureTitle{font-size:18px;font-weight:850}.figureMeta{font-size:12px;color:#9a6a2f;margin-top:4px}.timelineEra{padding:14px 0;border-bottom:1px solid #eee7dc}.timelineEra:last-child{border-bottom:0}.timelineNames{line-height:2;color:#6e665d;font-size:14px}
 .topitem:last-child{border-bottom:0}
 .rank{width:32px;font-weight:900}
 .topname{flex:1;font-weight:750}
@@ -89,7 +89,7 @@ canvas{max-width:100%}
       <button class="secondary" onclick="showHistory()">📖 测试记录</button>
     </div>
   </div>
-  <div class="card"><b>V2.0 新增</b><p class="sub">人物图鉴、人物搜索、时代分类、今日人物、更多历史人物，以及更详细的“为什么像他”结果。</p></div>
+  <div class="card"><b>V2.2 更新</b><p class="sub">人物图鉴升级为人物卡片，增加人物数量统计、时代人数、可点击时代人物，以及更完整的人物探索体验。</p></div>
   <div class="footer">History Personality · H5<br>手机、平板、电脑浏览器均可运行</div>
 </section>
 
@@ -97,7 +97,7 @@ canvas{max-width:100%}
   <button class="back" onclick="show('home')">← 返回</button>
   <div class="hero"><div class="eyebrow">HISTORICAL GALLERY</div><h1>历史人物图鉴</h1><div class="sub">共收录更多历史人物。可以搜索，也可以按时代浏览。</div></div>
   <div class="card"><input id="gallerySearch" oninput="renderGallery()" placeholder="搜索人物、身份或关键词" style="width:100%;padding:15px;border:1px solid #ddd;border-radius:14px"></div>
-  <div class="card"><div id="galleryFilters"></div><div id="galleryList"></div></div>
+  <div class="card"><div id="galleryStats" class="small" style="margin-bottom:12px"></div><div id="galleryFilters"></div><div id="galleryList"></div></div>
 </section>
 <section id="daily" class="screen">
   <button class="back" onclick="show('home')">← 返回</button>
@@ -513,7 +513,12 @@ function renderGallery(){
   filters.innerHTML=eras.map(e=>'<button class="tag" style="border:0;cursor:pointer" onclick="galleryEraChange('+JSON.stringify(e)+')">'+e+'</button>').join('');
   let arr=CHARACTERS.filter(x=>(active==='全部'||(x.era||'其他')===active));
   if(q)arr=arr.filter(x=>(x.name+' '+(x.subtitle||'')+' '+(x.role||'')+' '+(x.tags||[]).join(' ')).toLowerCase().includes(q));
-  document.getElementById('galleryList').innerHTML=arr.map((x,i)=>'<div class="topitem" onclick="openFigureFromGallery('+JSON.stringify(x.name)+')" style="cursor:pointer"><span class="rank">'+(i+1)+'</span><span class="topname">'+x.name+'<span class="small"> · '+(x.role||'历史人物')+'</span></span><span class="pct">'+(x.era||'')+'</span></div>').join('')||'<p class="small">没有找到相关人物。</p>';
+  const stats=document.getElementById('galleryStats');
+  if(stats)stats.textContent='当前人物 '+arr.length+' 位 · 全部人物 '+CHARACTERS.length+' 位';
+  document.getElementById('galleryList').innerHTML=arr.map((x,i)=>{
+    const tags=(x.tags||[]).slice(0,3).map(t=>'<span class="tag">'+t+'</span>').join('');
+    return '<div class="figureCard" onclick="openFigureFromGallery('+JSON.stringify(x.name)+')"><div class="figureTitle">'+x.name+'</div><div class="figureMeta">'+(x.era||'历史')+' · '+(x.role||x.subtitle||'历史人物')+'</div><div class="small" style="margin-top:7px">'+(x.subtitle||'')+'</div><div style="margin-top:5px">'+tags+'</div></div>';
+  }).join('')||'<p class="small">没有找到相关人物。</p>';
 }
 function galleryEraChange(e){window.galleryEra=e;renderGallery();}
 function openFigureFromGallery(name){
@@ -531,8 +536,11 @@ function showDaily(){
 function showTimeline(){
   show('timeline');
   const groups={};
-  CHARACTERS.forEach(c=>{const e=c.era||'其他';(groups[e]||(groups[e]=[])).push(c.name);});
-  document.getElementById('timelineList').innerHTML=Object.entries(groups).map(([e,n])=>'<div style="margin-bottom:18px"><b>'+e+'</b><p class="sub">'+n.join(' · ')+'</p></div>').join('');
+  CHARACTERS.forEach(c=>{const e=c.era||'其他';(groups[e]||(groups[e]=[])).push(c);});
+  document.getElementById('timelineList').innerHTML=Object.entries(groups).map(([e,items])=>{
+    const names=items.map(c=>'<span style="cursor:pointer" onclick="openFigureFromGallery('+JSON.stringify(c.name)+')">'+c.name+'</span>').join(' · ');
+    return '<div class="timelineEra"><b>'+e+' · '+items.length+'人</b><div class="timelineNames">'+names+'</div></div>';
+  }).join('');
 }
 </script>
 </body>
